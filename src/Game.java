@@ -3,23 +3,26 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable
+public class Game extends Canvas implements Runnable, KeyListener
 {
 	
 	public static int Height = 480;
 	public static int Width = 600;
 
-	public World world;
-	public Player player;
+	public static World world;
+	public static Player player;
 
 	public Game()
 	{
 		world = new World();
 		player = new Player(0,448-32);
 		this.setPreferredSize(new Dimension(Width,Height));
+		this.addKeyListener(this);
 	}
 	
 	public void tick()
@@ -77,6 +80,26 @@ public class Game extends Canvas implements Runnable
 		
 		
 		new Thread(game).start();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			this.player.jump = true;
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
 	}
 	
 }

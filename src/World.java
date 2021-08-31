@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,21 +10,26 @@ public class World
 
     public static int blockSize = 32;
 
-    public List<Tile> tiles = new ArrayList<Tile>();
+    public static List<Tile> tiles = new ArrayList<Tile>();
 
     public void tick()
     {
+        for(int i = 0; i < tiles.size(); i++)
+        {
+            tiles.get(i).tick();
+        }
+        
         if(Player.x >= lastPos)
         {   
             System.out.println("Gerar novo bloco");
-            int newWidth = new Random().nextInt(8-4) + 4;
+            int newWidth = new Random().nextInt(10 - 7) + 7;
             if(lastPos == 0)
             {
                 lastPos = lastPos + (lastWidth*32);
             }
             else
             {
-                lastPos = lastPos + 100 + (lastWidth*32);
+                lastPos = lastPos + new Random().nextInt(300-100) + 100 + (lastWidth*32);
             }           
             generateWorldBlock(newWidth);
             lastWidth = newWidth;
@@ -45,5 +51,20 @@ public class World
             Tile tile = new Tile(lastPos + (i*blockSize),448);
             tiles.add(tile);
         }
+    }
+
+    public static boolean isFree(int nextx, int nexty)
+    {
+        Rectangle playerBox = new Rectangle(nextx,nexty,blockSize,blockSize);
+        for(int i = 0; i < tiles.size();i++)
+        {
+            Rectangle boxTile = new Rectangle(tiles.get(i).x,tiles.get(i).y,blockSize,blockSize);
+            if(playerBox.intersects(boxTile))
+            {
+                return false;
+            }
+        }
+
+        return  true;
     }
 }

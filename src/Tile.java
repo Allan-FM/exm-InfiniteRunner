@@ -12,12 +12,21 @@ public class Tile
         this.y = y;
     }
 
+    public void tick()
+    {
+        if(x - Camera.x < 0)
+        {
+            World.tiles.remove(this);
+            return;
+        }
+    }
+
     public void render(Graphics g)
     {
         g.setColor(Color.blue);
-        g.fillRect(x, y, World.blockSize, World.blockSize);
+        g.fillRect(x - Camera.x, y - Camera.y, World.blockSize, World.blockSize);
 
         g.setColor(Color.blue);
-        g.fillRect(x, y, World.blockSize, World.blockSize);
+        g.fillRect(x - Camera.x, y - Camera.y, World.blockSize, World.blockSize);
     }
 }
