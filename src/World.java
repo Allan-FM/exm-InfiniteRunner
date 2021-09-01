@@ -21,7 +21,7 @@ public class World
         
         if(Player.x >= lastPos)
         {   
-            System.out.println("Gerar novo bloco");
+            //System.out.println("Gerar novo bloco");
             int newWidth = new Random().nextInt(10 - 7) + 7;
             if(lastPos == 0)
             {
@@ -32,6 +32,7 @@ public class World
                 lastPos = lastPos + new Random().nextInt(300-100) + 100 + (lastWidth*32);
             }           
             generateWorldBlock(newWidth);
+            Game.pontos++;
             lastWidth = newWidth;
         }
     }

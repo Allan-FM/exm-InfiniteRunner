@@ -1,11 +1,15 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.awt.image.BufferStrategy;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable, KeyListener
@@ -17,12 +21,18 @@ public class Game extends Canvas implements Runnable, KeyListener
 	public static World world;
 	public static Player player;
 
+	public static int pontos = 0;
+
+	public static BufferedImage playerSprite;
+	public static BufferedImage floorSprite;
+
 	public Game()
 	{
 		world = new World();
 		player = new Player(0,448-32);
 		this.setPreferredSize(new Dimension(Width,Height));
 		this.addKeyListener(this);
+		
 	}
 	
 	public void tick()
@@ -33,7 +43,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 	
 	public void render()
 	{
-		BufferStrategy bs = this.getBufferStrategy();
+		BufferStrategy bs = this.getBufferStrategy();	
 		if(bs == null)
 		{
 			this.createBufferStrategy(3);
@@ -45,6 +55,10 @@ public class Game extends Canvas implements Runnable, KeyListener
 		world.render(g);
 
 		player.render(g);
+
+		g.setFont(new Font("arial",Font.BOLD,18));
+		g.setColor(Color.white);
+		g.drawString("Pontos: "+ (pontos - 2), 20	, 20);
 		bs.show();
 	}
 	
@@ -92,7 +106,7 @@ public class Game extends Canvas implements Runnable, KeyListener
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			this.player.jump = true;
+			Game.player.jump = true;
 		}
 		
 	}

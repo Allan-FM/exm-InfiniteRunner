@@ -58,14 +58,20 @@ public class Player
         if(y >= Game.Height + 300)
         {
             //Game Over!!
-            x = 0;
+            GameOver();
+            return;
+        }
+    }
+
+    public void GameOver()
+    {
+        x = 0;
             Game.world = new World();
             World.lastPos = 0;
             World.lastWidth = 0;
             World.tiles = new ArrayList<Tile>();
 		    Game.player = new Player(0,448-32);
-            return;
-        }
+            Game.pontos = 0;
     }
 
     public void render(Graphics g)
